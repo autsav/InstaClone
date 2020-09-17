@@ -16,12 +16,17 @@
             
             <div class="text-gray-900 font-bold text-xl mb-2 flex content-around ">
                 <div class="pr-40 ">{{ $user->username }}</div>
-                <div class="pl-80 text-blue-700"> <a href="#">Add New Post</a></div>
+                
+                <div class="pl-80 text-blue-700"> <a href="/p/create">Add New Post</a></div>
            
         </div>
+                <div class="">
+                    <div class="text-blue-700 text-left "> <a href="/profile/{{ $user->id }}/edit">Edit Profile</a></div>
+                </div>
             <div class="flex content-around ">
+                
                     <div class="pr-5 ">
-                        <div class="text-gray-800 text-center  "><strong>88</strong> posts</div>
+                        <div class="text-gray-800 text-center  "><strong>{{ $user->posts->count() }}</strong> posts</div>
                     </div>
                     <div class="pr-5 ">
                         <div class="text-gray-800 text-center "><strong>229</strong> followers</div>
@@ -52,11 +57,29 @@
     </div>
         
     </x-slot>
-    @livewireStyles
+
+      
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-4 bg-gray-100">
+            
+                <div class="grid grid-flow-row grid-cols-3 grid-rows-2 p-3 gap-1">
+                @foreach($user->posts as $post)
+                        <div class="p-4 w-100">
+                            <a href="/p/{{ $post->id }}">
+                            <img src="/storage/{{ $post->image }}" alt="">
+                            </a>
+                               
+                        </div>
+                @endforeach          
+                </div>
+          
+    </div>
+
+
+    <!-- @livewireStyles
 
     @livewire('dashboard')
 
-    @livewireScripts
+    @livewireScripts -->
 
     
 </x-app-layout>
