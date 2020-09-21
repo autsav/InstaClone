@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+
+use App\Mail\NewUserWelcomeMail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +11,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -51,6 +54,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($user){
+            $user->profile()->create([
+                'title' => $user->username,
+            ]);
+
+            Mail::to($user->email)->send(new NewUserWelcomeMail());
+        });
+    }
+
     /**
      * The accessors to append to the model's array form.
      *
@@ -63,6 +78,10 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class)->orderBy('created_at','DESC');
+    }
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class);
     }
 
     public function profile()

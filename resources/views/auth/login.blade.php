@@ -1,7 +1,22 @@
 <x-guest-layout>
     <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+    <x-slot name="logo">
+        <div class="flex">
+                            <!-- Logo -->
+                            <div class="flex-shrink-0 flex items-center">
+                                <a href="/dashboard">
+                                   <div><img src="/svg/insta.png" style=" height: 20px; border-right: 2px solid #333" class="pr-3" alt=""></div> 
+                                </a>
+                            </div>
+
+                            <!-- Navigation Links -->
+                            <div class="p-1">
+                                <x-jet-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
+                                <div style="font-size:150%"  > instaClone</div>
+                                 
+                                </x-jet-nav-link>
+                            </div>
+                        </div>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

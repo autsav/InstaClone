@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="row p-3">
-                  <x-jet-label for="image" value="Profile Image" />
+                  <x-jet-label for="image" value="Post Image" />
                     <input type="file", id="image" name="image">
             </div>
             <div>
